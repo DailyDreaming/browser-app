@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" CONTENT="text/html;CHARSET=iso-8859-1">
+    <meta name="description" content="UCSC Genome Browser">
+    <meta name="keywords" content="genome, genome browser, human genome, genome assembly, Blat, UCSC, bioinformatics, gene prediction, SNP, SNPs, EST, mRNA, mouse genome, rat genome, chicken genome, chimp genome, dog genome, fruitfly genome, zebrafish genome, xenopus, frog genome, rhesus, opossum, danio rerio genome, drosophila, fugu, yeast, ciona,  comparative genomics, human variation, hapMap">
+    <title>UCSC Genome Browser Home</title>
+    <link href='https://fonts.googleapis.com/css?family=Oswald%3A700%7CLato%3A700%2C700italic%2C300%2C400%2C400italic' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../style/HGStyle.css">
+    <link rel="stylesheet" href="../style/jWest.css">
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            padding-top: 100px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0, 0, 0);
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
+        .close {
+            color: #aaaaaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+  </head>
+
+  <body>
+
+    <!-- Banner -->
+    <div id="banner" class="jwBanner">
+        <a class="jwAnchor" href="http://www.ucsc.edu/">
+          <div class="jwUcscLogoWrapper">
+            <img src="../images/GIlogo.png" class="jwUcscLogoWrapper">
+          </div>
+        </a>
+        <img src="../images/ucscHelixLogo.png" class="jwBannerHelixLogo">
+        <div class="jwBannerTitle">
+          Genome Browser
+        </div>
+    </div>
+
+    <!-- Menu bar / hotlinks / blue bar: -->
+    <div>
+      <noscript><div class='noscript'><div class='noscript-inner'><p><b>JavaScript is disabled in your web browser</b></p><p>You must have JavaScript enabled in your web browser to use the Genome Browser</p></div></div></noscript>
+<script type='text/javascript' SRC='js/jquery.js'></script>
+<script type='text/javascript' SRC='js/jquery.plugins.js'></script>
+<script type='text/javascript' SRC='/js/utils.js'></script>
+<LINK rel='STYLESHEET' href='style/nice_menu.css' TYPE='text/css'>
+<div id="main-menu-whole">
+
+		<div id="main-menu"><div id="block-nice_menus-1" class="clear-block block block-nice_menus">
+
+	<div class="upcorner"></div>
+	<div class="blockbg">
+		<div class="blockcontent">
+						<div class="content">
+
+<ul class="nice-menu nice-menu-down sf-js-enabled" id="nice-menu-1">
+
+<li class="first even" id="home"><a href="index.html" ><span id="home-link">Home</span></a></li>
+
+<li class="menuparent" id="tools1"><a href="cgi-bin/hgGateway">Genomes</a>
+	<ul style="display: none; visibility: hidden;">
+	<li class="first"><a href="cgi-bin/hgTracks?db=hg38&amp;position=lastDbPos">Human GRCh38/hg38</a></li>
+	<li><a href="cgi-bin/hgTracks?db=hg19&amp;position=lastDbPos">Human GRCh37/hg19</a></li>
+	<li><a href="cgi-bin/hgTracks?db=mm39&amp;position=lastDbPos">Mouse GRCm39/mm39</a></li>
+	<li><a href="cgi-bin/hgTracks?db=mm10&amp;position=lastDbPos">Mouse GRCm38/mm10</a></li>
+	<li><a href="https://hgdownload.soe.ucsc.edu/hubs/">Genome Archive GenArk</a></li>
+	<li><a href="cgi-bin/hgTracks?db=wuhCor1&amp;position=lastDbPos">SARS-CoV-2 (COVID-19)</a></li>
+	<li class="last"><a href="cgi-bin/hgGateway">Other</a></li>
+        </ul>
+</li>
+
+<li class="menuparent" id="tools2"><a href="cgi-bin/hgTracks">Genome Browser</a>
+	<ul style="display: none; visibility: hidden;">
+	<li class="first"><a id="configureMenuLink" href="cgi-bin/hgTracks?hgTracksConfigPage=configure">Configure</a></li>
+	<li><a id="trackSearchMenuLink" href="cgi-bin/hgTracks?hgt_tSearch=track+search">Track Search</a></li>
+        <!-- OPTIONAL_RECOMMENDED_TRACK_SETS_MENU -->
+	<li><a id="cartResetMenuLink" href="cgi-bin/cartReset">Reset All User Settings</a></li>
+        </ul>
+</li>
+
+
+<li class="menuparent" id="tools3"><span>Tools</span>
+	<ul style="display: none; visibility: hidden;">
+	<li class="first"><a id="blatMenuLink" href="cgi-bin/hgBlat?command=start">Blat</a></li>
+	<li><a id="ispMenuLink" href="cgi-bin/hgPcr">In-Silico PCR</a></li>
+	<li><a id="tableBrowserMenuLink" href="cgi-bin/hgTables">Table Browser</a></li>
+	<li><a id="liftOverMenuLink" href="cgi-bin/hgLiftOver">LiftOver</a></li>
+	<li><a id="gsMenuLink" href="cgi-bin/hgNear">Gene Sorter</a></li>
+	<li><a id="vaiMenuLink" href="cgi-bin/hgVai">Variant Annotation Integrator</a></li>
+	<li><a id="diMenuLink" href="cgi-bin/hgIntegrator">Data Integrator</a></li>
+	<li><a id="ggMenuLink" href="cgi-bin/hgGenome">Genome Graphs</a></li>
+        <li><a title="Explore gene/protein interactions and pathways" id="interactionMenuLink" href="cgi-bin/hgGeneGraph">Gene Interactions</a></li>
+	<li class="last"><a href="util.html">Other Tools</a></li>
+	</ul>
+</li>
+<li class="menuparent" id="mirrors"><span>Mirrors</span>
+	<ul style="display: none; visibility: hidden;">
+	<li class="first"><a href="mirror.html">Euro/Asia Mirrors</a></li>
+	<li><a href="goldenPath/help/mirror.html">Mirroring Instructions</a></li>
+	<!-- OPTIONAL_MIRROR_MENU -->
+	</ul>
+
+</li>
+<li class="menuparent" id="downloads"><span>Downloads</span>
+	<ul style="display: none; visibility: hidden;">
+	<li class="first"><a href="https://hgdownload.soe.ucsc.edu/downloads.html">Genome Data</a></li>
+	<li><a href="https://hgdownload.soe.ucsc.edu/downloads.html#source_downloads">Source Code</a></li>
+  <li><a href="https://genome-store.ucsc.edu">Genome Browser Store</a></li>
+	<li><a href="https://hgdownload.soe.ucsc.edu/downloads.html#utilities_downloads">Utilities</a></li>
+	<li class="last"><a href="goldenPath/help/ftp.html">FTP</a></li>
+	<li class="last"><a href="goldenPath/help/mysql.html">MySQL Access</a></li>
+	<li class="last"><a href="goldenPath/help/api.html">REST API</a></li>
+	</ul>
+</li>
+<li class="menuparent" id="myData"><span>My Data</span>
+	<ul style="display: none; visibility: hidden;">
+	<li><a id="customTracksMenuLink" href="cgi-bin/hgCustom">Custom Tracks</a></li>
+	<li><a id="sessionsMenuLink" href="cgi-bin/hgSession?hgS_doMainPage=1">My Sessions</a></li>
+	<li><a id="trackHubsMenuLink" href="cgi-bin/hgHubConnect">Track Hubs</a></li>
+	<li><a id="customCompositeMenuLink" href="cgi-bin/hgCollection">Track Collection Builder</a></li>
+	<li class="last"><a id="publicSessionsMenuLink" href="cgi-bin/hgPublicSessions">Public Sessions</a></li>
+	</ul>
+</li>
+
+<!-- OPTIONAL_VIEW_MENU -->
+
+<!-- OPTIONAL_PROJECT_MENU_START -->
+<li class="menuparent" id="projects"><span>Projects</span>
+	<ul style="display: none; visibility: hidden;">
+	<li class="first"><a href="gtex.html">Genotype Tissue Expression (GTEx)</a></li>
+	<li><a href="ENCODE/index.html">Encyclopedia of DNA Elements (ENCODE)</a></li>
+	<li><a href="singlecell.html">UCSC Cell Browser</a></li>
+	<li class="last"><a href="covid19.html">UCSC COVID-19 Research</a></li>
+	</ul>
+<!-- OPTIONAL_PROJECT_MENU_END -->
+
+<li class="menuparent" id="help"><span>Help</span><ul style="display: none; visibility: hidden;">
+<!-- CONTEXT_SPECIFIC_HELP -->
+<li><a href="FAQ/">FAQs & Search</a></li>
+<li><a href="goldenPath/help/hgTracksHelp.html">Browser Documentation</a></li>
+<li><a href="training/index.html">Training</a></li>
+<li><a href="contacts.html">Contact Us</a></li>
+<li class="last"><a href="http://genomewiki.ucsc.edu/" target="_blank">GenomeWiki</a></li>
+</ul>
+</li>
+
+<li class="menuparent last" id="aboutUs"><span>About Us</span>
+	<ul style="display: none; visibility: hidden;">
+	<li class="first odd"><a href="goldenPath/newsarch.html">News</a></li>
+	<li class="even"><a href="goldenPath/pubs.html">Publications</a></li>
+	<li class="odd"><a href="http://genome.ucsc.edu/blog/">Blog</a></li>
+	<li class="even"><a href="cite.html">Cite Us</a></li>
+	<li class="odd"><a href="goldenPath/credits.html">Credits</a></li>
+	<li class="even"><a href="goldenPath/releaseLog.html">Release Log</a></li>
+	<li class="odd"><a href="staff.html">Staff</a></li>
+	<li class="even"><a href="conditions.html">Conditions of Use</a></li>
+	<li class="odd"><a href="https://ucscgenomics.soe.ucsc.edu/careers/" TARGET="_blank">Jobs</a></li>
+	<li class="even last"><a href="license/">Licenses</a></li>
+        <li><a href="contacts.html">Contact Us</a></li>
+</ul>
+</li>
+
+</ul>
+</div>
+		</div>
+	</div>
+	<div class="downcorner"></div>
+
+</div>
+</div><!-- end main-menu -->
+</div><!-- end main-menu-whole -->
+<script type='text/javascript' nonce='S5t11LVMveaC9h2j34taFYDfczad'>
+$("#tools1 ul li a").each( function (a) {
+    if (this.href && this.href.indexOf("hgTracks") !== -1) {
+        var obj = this;
+        obj.onclick = function(e) {
+            var pix = calculateHgTracksWidth();
+            e.currentTarget.href += "&pix=" + pix;
+        }
+    }
+});
+</script>
+
+    </div>
+
+    <!-- Override nice-menu.css's menu background and fonts: -->
+    <link rel="stylesheet" href="../style/jWest.afterNiceMenu.css">
+
+    <div id="staticMain" class="jwStaticMain" style="display: inline-block;">
+
+      <!-- hgwdev warning (if applicable) -->
+
+
+      <!-- genome-preview warning (if applicable) -->
+
+
+      <div id="row1" class="jwRow">
+
+        <div id="pretty" class="jwColumn jwStaticLeftColumn">
+          <div id="prettyBox" class="jwSection">
+            <a href="cgi-bin/hgTracks">
+              <img src="images/newBlueHelix3.jpg" alt="modified from Cre8tive Images/ShutterStock.com" width=438 height=517>
+            </a>
+          </div> <!-- prettyBox -->
+        </div> <!-- pretty -->
+
+        <div id="tools" class="jwColumn jwStaticRightColumn">
+          <div id="toolsBox" class="jwSection">
+            <div class="jwSectionTitle">Our tools</div>
+            <div class="jwSectionContents">
+              <ul class="jwNoBullet jwLessIndent">
+                  <li class="jwSquareBullet">
+    <a href="cgi-bin/hgGateway">Genome Browser</a>
+    <div class="jwSmallText">
+      interactively visualize genomic data
+    </div>
+  </li>
+  <li class="jwSquareBullet">
+    <a href="covid19.html"> COVID-19 Research</a>
+    <div class="jwSmallText">
+      use the SARS-CoV-2 genome browser and explore coronavirus datasets
+    </div>
+  </li>
+  <li class="jwSquareBullet">
+    <a href="cgi-bin/hgBlat">BLAT</a>
+    <div class="jwSmallText">
+      rapidly align sequences to the genome
+    </div>
+  </li>
+  <li class="jwSquareBullet">
+    <a href="cgi-bin/hgTables">Table Browser</a>
+    <div class="jwSmallText">
+      download data from the Genome Browser database
+    </div>
+  </li>
+  <li class="jwSquareBullet">
+    <a href="cgi-bin/hgVai">Variant Annotation Integrator</a>
+    <div class="jwSmallText">
+      get functional effect predictions for variant calls
+    </div>
+  </li>
+  <li class="jwSquareBullet">
+    <a href="cgi-bin/hgIntegrator">Data Integrator</a>
+    <div class="jwSmallText">
+      combine data sources from the Genome Browser database
+    </div>
+  </li>
+  <li class="jwSquareBullet">
+    <a href="goldenpath/help/gbib.html">Genome Browser in a Box (GBiB)</a>
+    <div class="jwSmallText">
+      run the Genome Browser on your laptop or server
+    </div>
+  </li>
+  <li class="jwSquareBullet">
+    <a href="cgi-bin/hgPcr">In-Silico PCR</a>
+    <div class="jwSmallText">
+      rapidly align PCR primer pairs to the genome
+    </div>
+  </li>
+  <li class="jwSquareBullet">
+    <a href="cgi-bin/hgLiftOver">LiftOver</a>
+    <div class="jwSmallText">
+      convert genome coordinates between assemblies
+    </div>
+  </li>
+  <li class="jwSquareBullet">
+    <a href="cgi-bin/hgHubConnect#publicHubs">Track Hubs</a>
+    <div class="jwSmallText">
+      import and view external data tracks
+    </div>
+  </li>
+  <li class="jwSquareBullet">
+    <a href="goldenPath/help/api.html">REST API</a>
+    <div class="jwSmallText">
+      returns data in JSON format
+    </div>
+  </li>
+
+              </ul>
+              <a href="util.html">More tools...</a>
+              <br><br>
+            </div> <!-- sectionContents -->
+          </div> <!-- toolsBox -->
+        </div> <!-- tools -->
+
+      </div> <!-- row1 -->
+
+      <div id="row2" class="jwRow">
+
+        <div id="aboutUs" class="jwColumn jwStaticRightColumn">
+          <div id="aboutUsBox" class="jwSection">
+            <div class="jwSectionTitle">Our story</div>
+            <div class="jwSectionContents">
+            On June 22, 2000, UCSC and the other members of the International Human Genome Project consortium
+completed the first working draft of the human genome assembly, forever ensuring
+free public access to the genome and the information it contains. A few weeks
+later, on July 7, 2000, the newly assembled genome was released on the web at
+http://genome.ucsc.edu, along with the initial prototype of a graphical viewing tool, the
+UCSC Genome Browser. In the ensuing years, the website has grown to include a broad
+collection of vertebrate and model organism assemblies and annotations, along with a large
+suite of tools for viewing, analyzing and downloading data. Learn more about our history on the
+<a href="goldenPath/history.html">UCSC Genome Browser Project History</a> page and by
+watching this <a href="https://www.youtube.com/watch?v=_6caCfvMIiY" target="_blank">video</a>.
+
+            </div>
+          </div> <!-- aboutUsBox -->
+        </div> <!-- aboutUs -->
+
+        <div id="news" class="jwColumn jwStaticLeftColumn">
+          <div id="newsBox" class="jwSection">
+            <div class="jwSectionTitle">What's new</div>
+            <div class="jwSectionContents">
+              <div id="newsItems">
+                <!-- News item template:
+
+  <div class="jwNewsItem jwSingleLineRightColumn">
+  __DATE__ -
+  <a href="goldenPath/newsarch.html#__MMDDYY__">
+  __HEADLINE__
+  </a></div>
+
+  1. Replace __DATE__ with something like 'Apr. 29, 2016'
+  2. Replace __MMDDYY__ with something like '042916'
+  3. Replace __HEADLINE__ with the news item's headline like 'Awesome New Feature'
+     Be sure to follow the CORRECT STYLE for the headline:
+        - capitalize first letter of headline - no other caps except for proper nouns and acronyms
+        - check that headline char count doesn't exceed the line length (otherwise will truncate)
+        - approx 50 characters
+  4. Drop the bottom item from the list (limit of 3 items at a time)
+
+                                                | <- Cutoff point
+-->
+  <div class="jwNewsItem jwSingleLineRightColumn">
+  Feb. 25, 2022 -
+  <a href="goldenPath/newsarch.html#022522a">
+  MANE select v1.0 track available for hg38
+  </a></div>
+
+  <div class="jwNewsItem jwSingleLineRightColumn">
+  Feb. 25, 2022 -
+  <a href="goldenPath/newsarch.html#022522">
+  New COVID track on Drug Resistance Variants
+  </a></div>
+
+  <div class="jwNewsItem jwSingleLineRightColumn">
+  Feb. 22, 2022 -
+  <a href="goldenPath/newsarch.html#022222">
+  Recommended Track Sets paper
+  </a></div>
+
+              </div> <!-- newsItems -->
+              <div class="jwNewsItem">
+                <a href="goldenPath/newsarch.html">More news...</a>
+              </div>
+
+              <a href="https://groups.google.com/a/soe.ucsc.edu/forum/?hl=en#!forum/genome-announce"
+                 target=_blank>Subscribe</a>
+
+              <hr>
+              <em>The UCSC Genome Browser is developed and maintained by the
+              <a href="staff.html">Genome Bioinformatics Group</a>, a cross-departmental team
+              within the <a href="https://ucscgenomics.soe.ucsc.edu/">UCSC Genomics Institute</a></em>.
+            </div> <!-- sectionContents -->
+          </div> <!-- newsBox -->
+        </div> <!-- news -->
+
+      </div> <!-- row2 -->
+
+    </div> <!-- main -->
+<!--Adding survey button and link - cath 7-13-16 -->
+<!--
+    <div style="display: inline-block; vertical-align: top; padding-top: 10px;">
+      <a href="https://www.surveymonkey.com/r/QYVSXKW" target="_blank"</a>
+      <img src="../images/surveyButton.jpg" alt="user survey"
+      title="Your feedback is important to us! Please take our 2016 user survey."/>
+    </div>
+-->
+<!--end survey button, leaving comments in place for next survey -->
+
+    <!-- Note: after v335 release, we should change "inc/jWestFooter.html" to
+        "/cgi-bin/hgMenubar?incFile=/inc/jWestFooter.html" so there won't be extra
+        ../'s in local links for web browsers to ignore -->
+    <div class="jwClearBoth"></div>
+<div id="footer" class="jwRow jwFooterContainer">
+  <div class="jwFooterColumn">
+    <a href="http://www.ucsc.edu">UCSC Home</a>
+    <br>
+    <a href="http://www.soe.ucsc.edu">BSOE Home</a>
+    <br>
+    <a href="https://ucscgenomics.soe.ucsc.edu/">Genomics Institute Home</a>
+  </div>
+
+  <div class="jwFooterColumn">
+    <a href="../license/">Licenses</a>
+    <br>
+    <a href="../training/">Training</a>
+    <br>
+    <a href="../cite.html">Cite Us</a>
+    <br>
+    <a href="../FAQ/index.html">FAQs & Search</a>
+  </div>
+
+  <div class="jwFooterColumn">
+    <a href="https://genome-store.ucsc.edu/">Store</a>
+    <br>
+    <a href="../contacts.html">Contact</a>
+    <br>
+    <a href="../cgi-bin/hgUserSuggestion">Suggestions</a>
+    <br>
+    <a href="https://ucscgenomics.soe.ucsc.edu/careers/">Jobs</a>
+  </div>
+
+  <div class="jwFooterColumn">
+    <div class="jwFooterIcons">
+      <a href="http://www.facebook.com/ucscGenomeBrowser">
+        <i class="fa fa-facebook-square fa-2x"></i></a>
+      &nbsp;&nbsp;
+      <a href="https://www.twitter.com/GenomeBrowser">
+        <i class="fa fa-twitter-square fa-2x"></i></a>
+      &nbsp;&nbsp;
+      <a href="http://genome.ucsc.edu/blog/">
+        <i class="fa fa-wordpress fa-2x"></i></a>
+      <br>
+      <a href="https://secure.ucsc.edu/s/1069/bp18/interior.aspx?sid=1069&gid=1001&pgid=780&cid=1749&dids=645">
+        <div class="jwAllCapsButton jwDonateButton" id="donateButton">
+          Donate
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <div class="jwFooterCopyright">
+    &copy; 2000-2022 The Regents of the University of California. All Rights Reserved.
+    <br>
+    <a href="../conditions.html">Conditions of Use</a>
+  </div>
+</div> <!-- footer -->
+
+    <script src="js/analytics.js"></script>
+
+  <span>
+                      <script type="text/javascript" src="./js/widget.js"></script>
+              <div id="helpdesk_widget"></div>
+                            </span>
+<div id="GBTerms" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <p>
+        <center>
+            I agree that my use of the UCSC Genome Browser is for personal and non-profit academic research use OR that I already hold a license for the use of the UCSC Genome Browser.
+            <br><br>
+            More information on the terms of use can be found at: https://genome-store.ucsc.edu/
+        </center>
+        </p>
+        <button id="accept_button">Accept</button>
+        <button id="decline_button">Decline</button>
+    </div>
+
+</div>
+
+<script>
+    var genome_browser_terms_modal = document.getElementById("GBTerms");
+    var accept_button = document.getElementById("accept_button");
+    var decline_button = document.getElementById("decline_button");
+
+    genome_browser_terms_modal.style.display = "block";
+
+    accept_button.onclick = function () {
+        genome_browser_terms_modal.style.display = "none";
+    }
+
+    decline_button.onclick = function () {
+        location.href = 'https://genome-store.ucsc.edu/';
+    }
+</script>
+</body>
+</html>

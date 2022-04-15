@@ -1,0 +1,9 @@
+#!/usr/bin/with-contenv sh
+
+echo "Starting the genome browser..."
+echo $USER_NAME
+# apachectl -D FOREGROUND
+# service apache2 start
+# s6-setuidgid $USER_NAME service apache2 start
+s6-setuidgid $USER_NAME sleep infinity
+echo "Genome browser was started..."
