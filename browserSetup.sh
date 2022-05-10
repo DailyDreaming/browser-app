@@ -6,7 +6,8 @@
 # you can easily debug this script with 'bash -x browserInstall.sh', it 
 # will show all commands then
 
-set -u -e -o pipefail # fail on unset vars and all errors, also in pipes
+# fail on unset vars and all errors, also in pipes
+set -beEu -o pipefail
 
 exitHandler() {
     if [ "$1" == "100" -o "$1" == "0" ] ; then
@@ -1450,10 +1451,12 @@ function installBrowser ()
     # download the CGIs
     if [[ "$OS" == "OSX" ]]; then
         setupCgiOsx
-    else
+    # no need to download CGIs when we're gonna compile them
+    # from source anyways:
+    #else
         # don't download RNAplot, it's a 32bit binary that won't work anywhere anymore but at UCSC
         # this means that hgGene cannot show RNA structures but that's not a big issue
-        $RSYNC -avzP --exclude=RNAplot $HGDOWNLOAD::cgi-bin/ $CGIBINDIR/
+        #$RSYNC -avzP --exclude=hgPhyloPlace --exclude=RNAplot $HGDOWNLOAD::cgi-bin/ $CGIBINDIR/
     fi
 
     # download the html docs, exclude some big files on OSX
@@ -1461,8 +1464,10 @@ function installBrowser ()
     # try to minimize storage for OSX, mostly laptops
     if [ "$OS" == "OSX" ]; then
             $RSYNC --delete -azP --exclude=training --exclude=ENCODE --exclude=encode --exclude=rosenbloom.pdf --exclude=pubs*.pdf --exclude=*.{bb,bam,bai,bw,gz,2bit} --exclude=goldenpath $HGDOWNLOAD::htdocs/ $HTDOCDIR/
-    else
-            $RSYNC -avzP --exclude ENCODE/**.pdf $HGDOWNLOAD::htdocs/ $HTDOCDIR/
+    # commenting out for speed of testing, definitely uncomment before
+    # release so users will have the docs on their instance
+    #else
+            #$RSYNC -avzP --exclude ENCODE/**.pdf $HGDOWNLOAD::htdocs/ $HTDOCDIR/
     fi
     
     # assign all files just downloaded to a valid user. 
