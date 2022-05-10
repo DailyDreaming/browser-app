@@ -53,19 +53,22 @@ RUN apt-get -y update --fix-missing && \
 
 RUN rm /usr/bin/python3 && ln -s /usr/bin/python3.7 /usr/bin/python3
 
-ADD cred.json /root/.config/gcloud/application_default_credentials.json
-ADD cred.json /var/www/.config/gcloud/application_default_credentials.json
+#ADD cred.json /root/.config/gcloud/application_default_credentials.json
+#ADD cred.json /var/www/.config/gcloud/application_default_credentials.json
 
-RUN echo somethingsomething
-RUN python3 -m pip install terra-notebook-utils bog && python3 -m pip install git+https://github.com/DataBiosphere/terra-notebook-utils.git@nonewline
-RUN which tnu
-RUN which bog
-RUN cp $(which bog) /bin/bog
+#RUN echo somethingsomething
+#RUN python3 -m pip install terra-notebook-utils bog && python3 -m pip install git+https://github.com/DataBiosphere/terra-notebook-utils.git@nonewline
+#RUN which tnu
+#RUN which bog
+#RUN cp $(which bog) /bin/bog
 #RUN tnu drs --help
 #RUN tnu drs access drs://dg.4503:dg.4503/1447260e-654b-4f9a-9161-c511cbdd0f95
 
 ADD browserSetup.sh /tmp/browserSetup_raw.sh
-RUN python3 -c 'f = open("/tmp/browserSetup_raw.sh"); new_content = f.read().replace("if $MYSQLADMIN -u root password $MYSQLROOTPWD;", "if /etc/init.d/mysql start && $MYSQLADMIN -u root password $MYSQLROOTPWD;"); f2 = open("/tmp/browserSetup.sh", "w"); f2.write(new_content); f.close(); f2.close()'
+# This seems like a useful patch for browserSetup, you could fill out a
+# pull request for this alone if you want. Or maybe it has already been
+# fixed in the latest version
+RUN python -c 'f = open("/tmp/browserSetup_raw.sh"); new_content = f.read().replace("if $MYSQLADMIN -u root password $MYSQLROOTPWD;", "if /etc/init.d/mysql start && $MYSQLADMIN -u root password $MYSQLROOTPWD;"); f2 = open("/tmp/browserSetup.sh", "w"); f2.write(new_content); f.close(); f2.close()'
 RUN bash /tmp/browserSetup.sh -b install; exit 0
 RUN cp $MYCNF /root/.mylogin.cnf
 RUN apt-get install -y apache2 mariadb-server python-mysqldb libmariadbclient-dev gdb mysql-utilities
@@ -74,36 +77,33 @@ RUN mkdir -p /userdata/cramCache/error
 RUN chmod 777 /userdata/cramCache/error
 RUN mkdir -p /userdata/cramCache/pending
 RUN chmod 777 /userdata/cramCache/pending
-ADD 2b3a55ff7f58eb308420c8a9b11cac50 /userdata/cramCache/2b3a55ff7f58eb308420c8a9b11cac50
-
-RUN cd $APACHEDIR && wget http://hgdownload.soe.ucsc.edu/admin/jksrc.zip && unzip jksrc.zip && rm -f jksrc.zip
 
 RUN echo "cramRef=/userdata/cramCache" >> $APACHEDIR/cgi-bin/hg.conf
 
-RUN cd $APACHEDIR && git clone https://github.com/DailyDreaming/kentest2.git && cd kentest2 && git checkout pipeline-bog && cd .. && mv kentest2/ kent/
-#RUN cd $APACHEDIR && git clone https://github.com/DailyDreaming/kentest2.git && cd kentest2 && git checkout a && cd $APACHEDIR && mv kentest2/ kent/
-# RUN cp $APACHEDIR/kent/src/browserbox/usr/local/apache/cgi-bin/hg.conf $APACHEDIR/cgi-bin/hg.conf
+RUN cd /tmp && wget http://hgdownload.soe.ucsc.edu/admin/jksrc.zip && unzip jksrc.zip && rm -f jksrc.zip
+# This code is currently not compiling but eventually the below line
+# will replace the above jksrc.zip line
+#RUN cd /tmp && git clone https://github.com/DailyDreaming/kentest2.git && cd kentest2 && git checkout pipeline-bog && cd .. && mv kentest2/ kent/
+RUN cp /tmp/kent/src/browserbox/usr/local/apache/cgi-bin/hg.conf $APACHEDIR/cgi-bin/hg.conf
 
 ADD srcCompile.sh /tmp/srcCompile.sh
-RUN bash /tmp/srcCompile.sh
+RUN bash /tmp/srcCompile.sh || true
+RUN (crontab -l ;echo '* * * * * /tmp/kent/src/product/scripts/fetchCramReference.sh /userdata/cramRef/pending /userdata/cramRef /userdata/cramRef/error') | crontab -
 
-RUN echo '{"workspace": "scratch-lon", "workspace_namespace": "anvil-stage-demo", "copy_progress_indicator_type": "auto"}' > /var/www/.tnu_config
-RUN echo "cramRef=/userdata/cramCache" >> $APACHEDIR/cgi-bin/hg.conf
+#RUN echo '{"workspace": "scratch-lon", "workspace_namespace": "anvil-stage-demo", "copy_progress_indicator_type": "auto"}' > /var/www/.tnu_config
 
-RUN mkdir -p /usr/local/apache/trash
-RUN chmod 777 /usr/local/apache/trash
 
-RUN curl -SLO "https://github.com/just-containers/s6-overlay/releases/download/v2.2.0.3/s6-overlay-${ARCH}.tar.gz" \
-  && tar -xzf s6-overlay-${ARCH}.tar.gz -C / \
-  && tar -xzf s6-overlay-${ARCH}.tar.gz -C /usr ./bin \
-  && rm -rf s6-overlay-${ARCH}.tar.gz
+#RUN curl -SLO "https://github.com/just-containers/s6-overlay/releases/download/v2.2.0.3/s6-overlay-${ARCH}.tar.gz" \
+#  && tar -xzf s6-overlay-${ARCH}.tar.gz -C / \
+#  && tar -xzf s6-overlay-${ARCH}.tar.gz -C /usr ./bin \
+#  && rm -rf s6-overlay-${ARCH}.tar.gz
 
 COPY 00-mysql.sh /etc/cont-init.d/00-mysql.sh
 COPY 10-browser.sh /etc/cont-init.d/10-browser.sh
 
-RUN mkdir /etc/services.d/genomebrowserapache
-COPY genomebrowserapache/run /etc/services.d/genomebrowserapache/run
-RUN chmod 777 /etc/services.d/genomebrowserapache/run
+#RUN mkdir /etc/services.d/genomebrowserapache
+#COPY genomebrowserapache/run /etc/services.d/genomebrowserapache/run
+#RUN chmod 777 /etc/services.d/genomebrowserapache/run
 
 COPY ports.conf /etc/apache2/
 
@@ -111,5 +111,4 @@ COPY index.html /usr/local/apache/htdocs/index.html
 
 EXPOSE 3306 33060 8000 8001 80 443 3333 873
 
-#ENTRYPOINT ["sh", "-c", "export GOOGLE_PROJECT=anvil-stage-demo; export WORKSPACE_NAME=scratch-lon; /etc/init.d/mysql start; apachectl -D FOREGROUND"]
-ENTRYPOINT ["/init"]
+ENTRYPOINT ["/bin/bash"]
