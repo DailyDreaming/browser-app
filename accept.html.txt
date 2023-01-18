@@ -1,0 +1,31 @@
+<div id="GBTerms" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <p>
+        <center>
+            I agree that my use of the UCSC Genome Browser is for personal and non-profit academic research use OR that I already hold a license for the use of the UCSC Genome Browser.
+            <br><br>
+            More information on the terms of use can be found at: https://genome-store.ucsc.edu/
+        </center>
+        </p>
+        <button id="accept_button">Accept</button>
+        <button id="decline_button">Decline</button>
+    </div>
+
+</div>
+
+<script>
+    var genome_browser_terms_modal = document.getElementById("GBTerms");
+    var accept_button = document.getElementById("accept_button");
+    var decline_button = document.getElementById("decline_button");
+
+    genome_browser_terms_modal.style.display = "block";
+
+    accept_button.onclick = function () {
+        genome_browser_terms_modal.style.display = "none";
+    }
+
+    decline_button.onclick = function () {
+        location.href = 'https://genome-store.ucsc.edu/';
+    }
+</script>
