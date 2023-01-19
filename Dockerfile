@@ -86,11 +86,13 @@ RUN mkdir -p /userdata/cramCache/pending
 RUN chmod 777 /userdata/cramCache/pending
 
 # wget https://www.ebi.ac.uk/ena/cram/md5/2b3a55ff7f58eb308420c8a9b11cac50
+# wget https://www.ebi.ac.uk/ena/cram/md5/f98db672eb0993dcfdabafe2a882905c
 # TODO: which others do we need?
 ADD 2b3a55ff7f58eb308420c8a9b11cac50 /userdata/cramCache/2b3a55ff7f58eb308420c8a9b11cac50
+ADD f98db672eb0993dcfdabafe2a882905c /userdata/cramCache/f98db672eb0993dcfdabafe2a882905c
 
 # RUN git clone git://genome-source.soe.ucsc.edu/kent.git && cd kent && git checkout -t -b beta origin/beta && cd src && make -j4 cgi-alpha
-RUN cd $APACHEDIR && git clone https://github.com/diekhans/kent.git && cd kent && git checkout anvil
+RUN cd $APACHEDIR && git clone https://github.com/diekhans/kent.git && cd kent && git checkout udc-protocols
 # this makefile is missing an "install" target, so we patch it
 COPY hubcheck.makefile $APACHEDIR/kent/src/hg/utils/hubCheck/makefile
 
